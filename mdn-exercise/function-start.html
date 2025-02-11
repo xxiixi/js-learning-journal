@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en-US">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width" />
+    <title>Function start</title>
+    <style>
+      .msgBox {
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        width: 242px;
+        background: #eee;
+      }
+
+      .msgBox p {
+        line-height: 1.5;
+        padding: 10px 20px;
+        color: #333;
+        padding-left: 82px;
+        background-position: 25px center;
+        background-repeat: no-repeat;
+      }
+
+      .msgBox button {
+        background: none;
+        border: none;
+        position: absolute;
+        top: 0;
+        right: 0;
+        font-size: 1.1rem;
+        color: #aaa;
+      }
+    </style>
+  </head>
+  <body>
+    <button>Display message box</button>
+
+    <script>
+      const btn = document.querySelector("button");
+      btn.onclick = function () {
+        // displayMessage("Woo, this is a different message!");
+        displayMessage(
+          "Your inbox is almost full — delete some mails",
+          "warning"
+        );
+        // displayMessage("Brian: Hi there, how are you today?", "chat");
+      };
+
+      function displayMessage(msgText, msgType) {
+        // 1. 使用了一个dom，选择了<html> 元素并且把它存放在一个叫 html的常量中，这样方便我们接下来使用它
+        const html = document.querySelector("html");
+
+        // 2. 创建了一个新的<div>元素，然后把它存放在一个叫 panel的常量中
+        const panel = document.createElement("div");
+        // 给 panel 元素添加了一个值为msgBox 的class 类属性。
+        panel.setAttribute("class", "msgBox");
+        // 给 html 常量追加了我们设置好样式的 panel 元素。
+        html.appendChild(panel);
+
+        // 3. 创建了一个新的<p>元素，然后把它存放在一个叫 msg的常量中
+        const msg = document.createElement("p");
+        msg.textContent = msgText;
+        panel.appendChild(msg);
+
+        const closeBtn = document.createElement("button");
+        closeBtn.textContent = "x";
+        panel.appendChild(closeBtn);
+
+        closeBtn.onclick = function () {
+          panel.parentNode.removeChild(panel);
+        };
+
+        if (msgType === "warning") {
+          msg.style.backgroundImage = "url(icons/warning.png)";
+          panel.style.backgroundColor = "red";
+        } else if (msgType === "chat") {
+          msg.style.backgroundImage = "url(icons/chat.png)";
+          panel.style.backgroundColor = "aqua";
+        } else {
+          msg.style.paddingLeft = "20px";
+        }
+      }
+    </script>
+  </body>
+</html>
